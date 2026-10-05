@@ -1,10 +1,10 @@
 # Dossio
 
-> 🚧 **En construction** — projet développé en *build in public*.
+> 🚧 **En construction** — projet développé en _build in public_.
 
 CRM multi-organisations qui centralise tous les documents d'un client (factures, devis, contrats en PDF, DOCX, XLSX) et permet de leur poser des questions en langage naturel, avec des **réponses sourcées**.
 
-> *« Quel est le montant du dernier devis envoyé à ACME, et quelles sont ses conditions de paiement ? »*
+> _« Quel est le montant du dernier devis envoyé à ACME, et quelles sont ses conditions de paiement ? »_
 > → réponse + extraits des documents d'origine (fichier, page).
 
 ## Le problème
@@ -13,14 +13,14 @@ Les informations d'un client sont dispersées dans des dizaines de documents hé
 
 ## Stack
 
-| Brique | Techno |
-|---|---|
-| Application | Laravel · Inertia · Vue 3 · TypeScript · Tailwind · shadcn-vue |
-| Service IA | Python · FastAPI · Pydantic |
-| Base | PostgreSQL + pgvector |
-| Traitements longs | Queue Laravel (driver `database`) |
-| Tests & qualité | Pest · Larastan · Pint · pytest · Ruff |
-| Environnement | Docker Compose |
+| Brique            | Techno                                                         |
+| ----------------- | -------------------------------------------------------------- |
+| Application       | Laravel · Inertia · Vue 3 · TypeScript · Tailwind · shadcn-vue |
+| Service IA        | Python · FastAPI · Pydantic                                    |
+| Base              | PostgreSQL + pgvector                                          |
+| Traitements longs | Queue Laravel (driver `database`)                              |
+| Tests & qualité   | Pest · Larastan · Pint · pytest · Ruff                         |
+| Environnement     | Docker Compose                                                 |
 
 ## Architecture
 
@@ -46,7 +46,7 @@ Les choix techniques sont documentés sous forme d'ADR dans [`docs/decisions/`](
 
 ## Statut
 
-- [ ] Environnement Docker
+- [x] Environnement Docker
 - [ ] Socle Laravel + authentification
 - [ ] Multi-tenant (organisations, isolation)
 - [ ] Clients et upload de documents
