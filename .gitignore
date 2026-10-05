@@ -4,6 +4,7 @@
 !.env.example
 *.pem
 *.key
+/auth.json
 
 # ── PHP / Laravel ───────────────────────────────────
 /vendor/
@@ -12,20 +13,39 @@
 /public/storage
 /public/hot
 /public/build
+/public/fonts-manifest.dev.json
 /bootstrap/ssr
 .phpunit.result.cache
 /.phpunit.cache
+.phpactor.json
 
 # ── JS / Front ──────────────────────────────────────
 /node_modules/
+/resources/js/actions
+/resources/js/routes
+/resources/js/wayfinder
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
 
 # ── Docker ──────────────────────────────────────────
 docker-compose.override.yml
 
 # ── IDE / OS ────────────────────────────────────────
-.idea/
-.vscode/
+/.idea/
+/.vscode/
+/.fleet
+/.nova
+/.zed
 *.swp
 .DS_Store
 Thumbs.db
+
+# ── Outils IA (fichiers locaux) ─────────────────────
 CLAUDE.md
+/AGENTS.md
+/.claude
+/.cursor
+/.agents
+/.mcp.json
+/boost.json
