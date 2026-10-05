@@ -1,0 +1,30 @@
+# ── Secrets ─────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ── PHP / Laravel ───────────────────────────────────
+/vendor/
+/storage/*.key
+/storage/pail
+/public/storage
+/public/hot
+/public/build
+/bootstrap/ssr
+.phpunit.result.cache
+/.phpunit.cache
+
+# ── JS / Front ──────────────────────────────────────
+/node_modules/
+
+# ── Docker ──────────────────────────────────────────
+docker-compose.override.yml
+
+# ── IDE / OS ────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db

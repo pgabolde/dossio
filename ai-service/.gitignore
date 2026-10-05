@@ -1,0 +1,19 @@
+# Environnement virtuel (géré par uv)
+.venv/
+
+# Caches Python et outils
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Build
+dist/
+build/
+*.egg-info/
+
+# Secrets
+.env
