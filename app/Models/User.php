@@ -7,6 +7,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -26,6 +28,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property int|null $current_organization_id
  */
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
@@ -48,5 +51,27 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
             'two_factor_confirmed_at' => 'datetime',
             /* @end-chisel-2fa */
         ];
+    }
+
+    /** @return BelongsToMany<Organization, $this> */
+    public function organizations(): BelongsToMany
+    {
+        return $this->belongsToMany(Organization::class)
+            ->withPivot('role')
+            ->withTimestamps();
+    }
+
+    /** @return BelongsTo<Organization, $this> */
+    public function currentOrganization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class);
+    }
+
+    public function isOwnerOf(Organization $organization): bool
+    {
+        return $this->organizations()
+            ->whereKey($organization->id)
+            ->wherePivot('role', 'owner')
+            ->exists();
     }
 }

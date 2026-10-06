@@ -61,4 +61,13 @@ class UserFactory extends Factory
         ]);
         /* @end-chisel-2fa */
     }
+
+    public function withOrganization(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            $organization = $user->organizations()->create(['name' => "Organisation de $user->name"], ['role' => 'owner']);
+            $user->current_organization_id = $organization->id;
+            $user->save();
+        });
+    }
 }
