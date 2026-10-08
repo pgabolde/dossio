@@ -39,6 +39,7 @@ export default defineConfig({
             host: 'localhost',
         },
         watch: {
+            usePolling: true,
             ignored: [
                 '**/.agents/**',
                 '**/.claude/**',
