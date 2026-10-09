@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Http\Resources\ClientResource;
+use App\Http\Resources\DocumentResource;
 use App\Models\Client;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -69,6 +70,7 @@ class ClientController extends Controller
                 'update' => Gate::allows('update', $client),
                 'delete' => Gate::allows('delete', $client),
             ],
+            'documents' => DocumentResource::collection($client->documents()->latest()->get()),
         ]);
     }
 

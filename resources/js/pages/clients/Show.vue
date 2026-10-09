@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Form, Head, Link } from '@inertiajs/vue3';
 import { destroy, edit, index } from '@/routes/clients';
-import type { Client } from '@/types';
+import type { Client, ClientDocument } from '@/types';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -13,10 +13,12 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
+import ClientDocuments from '@/components/clients/ClientDocuments.vue';
 
 defineProps<{
     client: Client;
     can: { update: boolean; delete: boolean };
+    documents: ClientDocument[]
 }>();
 
 defineOptions({
@@ -93,13 +95,11 @@ defineOptions({
             <dt class="text-muted-foreground">SIRET</dt>
             <dd>{{ client.siret ?? '—' }}</dd>
         </dl>
-        <div>
-            <h2 class="text-lg font-semibold">Documents</h2>
-            <p
-                class="rounded-md border border-dashed p-8 text-center text-muted-foreground"
-            >
-                Aucun document pour l'instant
-            </p>
-        </div>
+
+        <ClientDocuments
+            :client-id="client.id"
+            :documents="documents"
+            :can-upload="can.update"
+        />
     </div>
 </template>

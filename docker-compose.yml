@@ -70,7 +70,7 @@ services:
 
     queue:
         <<: *app
-        command: php artisan queue:listen --tries=3
+        command: php artisan queue:work --tries=3
         restart: unless-stopped
         depends_on:
             db:

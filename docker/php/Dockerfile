@@ -11,6 +11,8 @@ COPY --from=node:24-slim /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
+COPY uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+
 ARG UID=1000
 ARG GID=1000
 RUN groupmod -o -g ${GID} www-data && usermod -o -u ${UID} -g ${GID} www-data
