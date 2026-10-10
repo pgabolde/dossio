@@ -40,6 +40,12 @@ services:
             - /app/.venv
         ports:
             - '127.0.0.1:8000:8000'
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        environment:
+            OLLAMA_BASE_URL: http://host.docker.internal:11434
+            EMBEDDING_MODEL: bge-m3
+            EMBEDDING_DIMENSIONS: 1024
         healthcheck:
             test:
                 [

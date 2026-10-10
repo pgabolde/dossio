@@ -22,7 +22,7 @@ class DocumentResource extends JsonResource
             'mime_type' => $this->mime_type,
             'size' => $this->size,
             'status' => $this->status,
-            'created_at' => $this->created_at
+            'created_at' => $this->created_at,
         ];
     }
 }

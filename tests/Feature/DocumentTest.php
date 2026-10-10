@@ -62,7 +62,7 @@ test('stocke un PDF, crée le document en pending et dispatch le job', function 
     );
 });
 
-test('refuse un fichier qui n\'est pas un PDF, même renommé en .pdf', function() {
+test('refuse un fichier qui n\'est pas un PDF, même renommé en .pdf', function () {
     $file = UploadedFile::fake()->create('fake.pdf', 500, 'text/plain');
 
     uploadDocument($this->client, $file)->assertSessionHasErrors('file');
@@ -72,7 +72,7 @@ test('refuse un fichier qui n\'est pas un PDF, même renommé en .pdf', function
     Queue::assertNothingPushed();
 });
 
-test('refuse un fichier PDF trop lourd', function() {
+test('refuse un fichier PDF trop lourd', function () {
     $file = UploadedFile::fake()->create('heavy_file.pdf', 20481, 'application/pdf');
 
     uploadDocument($this->client, $file)->assertSessionHasErrors('file');
@@ -82,7 +82,7 @@ test('refuse un fichier PDF trop lourd', function() {
     Queue::assertNothingPushed();
 });
 
-test('accepte un fichier PDF avec la taille maximum', function() {
+test('accepte un fichier PDF avec la taille maximum', function () {
     $file = UploadedFile::fake()->create('heavy_file_ok.pdf', 20480, 'application/pdf');
 
     uploadDocument($this->client, $file)->assertRedirect()->assertSessionHasNoErrors();
@@ -146,13 +146,11 @@ test('le job pose le contexte de l\'org du document et le passe en processing', 
     // sinon le test passerait même si le job ne posait rien.
     app(CurrentOrganization::class)->set($this->user->currentOrganization);
 
-
     (new ProcessDocument($document))->handle(app(CurrentOrganization::class));
 
     expect(app(CurrentOrganization::class)->id())->toBe($orgB->id)
         ->and($document->refresh()->status)->toBe(DocumentStatus::Processing);
 });
-
 
 test('failed() passe le document en failed et enregistre le message', function () {
     $document = createDocument($this->client);

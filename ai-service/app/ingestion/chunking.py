@@ -6,11 +6,13 @@ from app.ingestion.extraction import Page
 WHITESPACE = re.compile(r"\s+")
 SENTENCE_END = re.compile(r"(?<=[.!?])\s+")
 
+
 @dataclass(frozen=True)
 class Chunk:
     text: str
     page_start: int
     page_end: int
+
 
 def split_sentences(pages: list[Page]) -> list[tuple[str, int]]:
     sentences: list[tuple[str, int]] = []
@@ -25,11 +27,15 @@ def split_sentences(pages: list[Page]) -> list[tuple[str, int]]:
 
     return sentences
 
+
 def to_chunk(sentences: list[tuple[str, int]]) -> Chunk:
     text = " ".join(sentence for sentence, _ in sentences)
     return Chunk(text=text, page_start=sentences[0][1], page_end=sentences[-1][1])
 
-def chunk_pages(pages: list[Page], max_chars: int = 800, overlap_sentences: int = 1) -> list[Chunk]:
+
+def chunk_pages(
+    pages: list[Page], max_chars: int = 800, overlap_sentences: int = 1
+) -> list[Chunk]:
     chunks: list[Chunk] = []
     current: list[tuple[str, int]] = []
 

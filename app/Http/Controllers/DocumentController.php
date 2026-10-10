@@ -7,9 +7,9 @@ use App\Jobs\ProcessDocument;
 use App\Models\Client;
 use App\Models\Document;
 use Illuminate\Filesystem\FilesystemAdapter;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -21,7 +21,7 @@ class DocumentController extends Controller
         /** @var UploadedFile $file */
         $file = $request->file('file');
 
-        $path = $file->store('documents/' . $client->organization_id, 'local');
+        $path = $file->store('documents/'.$client->organization_id, 'local');
 
         if ($path === false) {
             throw new RuntimeException('Échec de l\'enregistrement du fichier.');

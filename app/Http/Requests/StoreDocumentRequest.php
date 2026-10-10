@@ -28,8 +28,8 @@ class StoreDocumentRequest extends FormRequest
                 'required',
                 'file',
                 'mimes:pdf',
-                'max:20480'
-            ]
+                'max:20480',
+            ],
         ];
     }
 
