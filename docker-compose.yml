@@ -77,7 +77,7 @@ services:
 
     queue:
         <<: *app
-        command: php artisan queue:work --tries=3
+        command: php artisan queue:work --timeout=180
         restart: unless-stopped
         depends_on:
             db:

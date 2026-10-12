@@ -4,11 +4,13 @@ use App\Enums\DocumentStatus;
 use App\Jobs\ProcessDocument;
 use App\Models\Client;
 use App\Models\Document;
+use App\Models\DocumentChunk;
 use App\Models\Organization;
 use App\Models\User;
 use App\Support\CurrentOrganization;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Testing\TestResponse;
@@ -146,10 +148,31 @@ test('le job pose le contexte de l\'org du document et le passe en processing', 
     // sinon le test passerait même si le job ne posait rien.
     app(CurrentOrganization::class)->set($this->user->currentOrganization);
 
+    Http::fake([
+        '*/ingest' => Http::response([
+            'page_count' => 1,
+            'embedding_model' => 'bge-m3',
+            'chunks' => [
+                [
+                    'text' => 'Facture ACME',
+                    'page_start' => 1,
+                    'page_end' => 1,
+                    'embedding' => array_fill(0, 1024, 0.1),
+                ],
+            ],
+        ]),
+    ]);
+
     (new ProcessDocument($document))->handle(app(CurrentOrganization::class));
 
+    $chunk = DocumentChunk::withoutGlobalScopes()
+        ->where('document_id', $document->id)
+        ->sole();
+
     expect(app(CurrentOrganization::class)->id())->toBe($orgB->id)
-        ->and($document->refresh()->status)->toBe(DocumentStatus::Processing);
+        ->and($document->refresh()->status)->toBe(DocumentStatus::Ready)
+        ->and($chunk->organization_id)->toBe($orgB->id)
+        ->and($chunk->client_id)->toBe($clientB->id);
 });
 
 test('failed() passe le document en failed et enregistre le message', function () {

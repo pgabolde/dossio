@@ -34,5 +34,8 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'ai_service' => [
+        'url' => env('AI_SERVICE_URL', 'http://ai-service:8000'),
+        'timeout' => (int) env('AI_SERVICE_TIMEOUT', 150),
+    ],
 ];
